@@ -21,16 +21,16 @@ public class AdminController {
 
     @GetMapping("/loginAdmin")
     public String loginForm(Model model) {
-        return "loginAdmin";
+        return "/admin/loginAdmin";
     }
 
     @PostMapping("/loginAdmin")
     public String login(@RequestParam("email") String email, @RequestParam("mot_de_passe") String motDePasse) {
         Admin admin = adminService.checkLogin(email, motDePasse);
         if (admin != null) {
-            return "dashboard";
+            return "/admin/dashboard";
         } else {
-            return "loginAdmin";
+            return "/admin/loginAdmin";
         }
 }
 }

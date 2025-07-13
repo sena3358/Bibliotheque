@@ -6,5 +6,6 @@
 <h2>Résultat</h2>
 <p>${message}</p>
 <a href="${pageContext.request.contextPath}/prets/form">Retour</a>
+<a href="${pageContext.request.contextPath}/admin/dashboard.jsp">Retour</a>
 </body>
 </html>

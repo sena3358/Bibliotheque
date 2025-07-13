@@ -82,6 +82,7 @@ public String effectuerPret(Long adherentId, Long exemplaireId, TypePret typePre
 
     if (!adherent.getStatut().equals(StatutAdherent.actif)) return "Adhérent inactif";
     if (!exemplaire.getStatut().equals(StatutExemplaire.disponible)) return "Exemplaire indisponible";
+    //if (adherent.getDateExpiration().isBefore(LocalDate.now())) return "Veuillez vous reabonnee";
 
     // Vérification d'âge requis
     Livre livre = exemplaire.getLivre();

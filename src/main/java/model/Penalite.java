@@ -26,12 +26,7 @@ public class Penalite {
     
     @Column(name = "date_fin")
     private LocalDate dateFin;
-    
-    @Column(precision = 10, scale = 2)
-    private BigDecimal montant;
-    
-    private String raison;
-    
+        
     @ManyToOne
     @JoinColumn(name = "pret_id", nullable = false)
     private Pret pret;
@@ -40,15 +35,16 @@ public class Penalite {
     @JoinColumn(name = "adherent_id", nullable = false)
     private Adherent adherent;
     
+    
+
     // Constructeurs
     public Penalite() {}
     
-    public Penalite(Pret pret, Adherent adherent, BigDecimal montant, String raison) {
+    public Penalite(LocalDate dateEmission, LocalDate dateFin, Pret pret, Adherent adherent) {
+        this.dateEmission = LocalDate.now();
+        this.dateFin = dateFin;
         this.pret = pret;
         this.adherent = adherent;
-        this.montant = montant;
-        this.raison = raison;
-        this.dateEmission = LocalDate.now();
     }
     
     // Getters et Setters
@@ -61,11 +57,6 @@ public class Penalite {
     public LocalDate getDateFin() { return dateFin; }
     public void setDateFin(LocalDate dateFin) { this.dateFin = dateFin; }
     
-    public BigDecimal getMontant() { return montant; }
-    public void setMontant(BigDecimal montant) { this.montant = montant; }
-    
-    public String getRaison() { return raison; }
-    public void setRaison(String raison) { this.raison = raison; }
     
     public Pret getPret() { return pret; }
     public void setPret(Pret pret) { this.pret = pret; }

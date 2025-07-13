@@ -9,10 +9,10 @@
     <h2>Login administrateur</h2>
     <form action="${pageContext.request.contextPath}/admin/loginAdmin" method="post">
         <label>Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" value="admin@example.com">
         <br>
         <label>Mot de passe:</label>
-        <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+        <input type="password" id="mot_de_passe" name="mot_de_passe" value="password123">
         <br>
         <input type="submit" value="Login">
     </form>

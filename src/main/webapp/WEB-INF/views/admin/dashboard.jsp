@@ -8,5 +8,7 @@
 <body>
     <a href="${pageContext.request.contextPath}/prets/form">Faire un pret</a>
     <a href="${pageContext.request.contextPath}/prets/liste">Voir les prets</a>
+    <a href="${pageContext.request.contextPath}/prolongements/list">Voir les demandes de prolongement</a>
+    <a href="${pageContext.request.contextPath}/adherent/list">Voir les membres</a>
 </body>
 </html>
