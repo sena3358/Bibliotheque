@@ -15,7 +15,7 @@
     <h2>Liste des adhérents</h2>
     <table border="1">
         <tr>
-            <th>Id</th><th>Numéro</th><th>Prénom</th><th>Type</th><th>Statut</th><th>Action</th>
+            <th>Id</th><th>Numéro</th><th>Prénom</th><th>Type</th><th>Statut</th><th>Fin d'abonnement</th><th>Action</th>
         </tr>
         <% for (Adherent adherent : adherents) { %>
             <tr>
@@ -24,6 +24,7 @@
                 <td><%= adherent.getPrenom() %></td>  
                 <td><%= adherent.getTypeMembre().getLibelle() %></td>  
                 <td><%= adherent.getStatut() %></td>  
+                <td><%= adherent.getDateExpiration() %></td>
                 <td>
                     <% if (!"actif".equalsIgnoreCase(adherent.getStatut().toString())) { %>
                         <form action="${pageContext.request.contextPath}/adherent/activer" method="post">
