@@ -87,7 +87,7 @@ CREATE TABLE Pret (
 -- Table Reservation
 CREATE TABLE Reservation (
     reservation_id SERIAL PRIMARY KEY,
-    exemplaire_id INT NOT NULL,  -- Change de exemplaire_id à livre_id
+    exemplaire_id INT NOT NULL,  
     adherent_id INT NOT NULL,
     date_reservation TIMESTAMP NOT NULL,
     statut VARCHAR(10) CHECK (statut IN ('en_attente', 'completee', 'annulee')) DEFAULT 'en_attente',

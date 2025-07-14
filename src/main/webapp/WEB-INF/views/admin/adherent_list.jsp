@@ -9,12 +9,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Liste des adhérents</title>
 </head>
 <body>
-    <table>
+    <h2>Liste des adhérents</h2>
+    <table border="1">
         <tr>
-            <td>Id</td><td>Numero</td><td>Prenom</td><td>Type</td><td>Statut</td>
+            <th>Id</th><th>Numéro</th><th>Prénom</th><th>Type</th><th>Statut</th><th>Action</th>
         </tr>
         <% for (Adherent adherent : adherents) { %>
             <tr>
@@ -23,9 +24,20 @@
                 <td><%= adherent.getPrenom() %></td>  
                 <td><%= adherent.getTypeMembre().getLibelle() %></td>  
                 <td><%= adherent.getStatut() %></td>  
+                <td>
+                    <% if (!"actif".equalsIgnoreCase(adherent.getStatut().toString())) { %>
+                        <form action="${pageContext.request.contextPath}/adherent/activer" method="post">
+                            <input type="hidden" name="id" value="<%= adherent.getId() %>"/>
+                            <button type="submit">Activer</button>
+                        </form>
+                    <% } else { %>
+                        Déjà actif
+                    <% } %>
+                </td>
             </tr>
         <% } %>
     </table>
-    <a href="${pageContext.request.contextPath}/admin/dashboard">Retour</a>
+
+    <a href="${pageContext.request.contextPath}/admin/dashboard.jsp">Retour</a>
 </body>
 </html>
