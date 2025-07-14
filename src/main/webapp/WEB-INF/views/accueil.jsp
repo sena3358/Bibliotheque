@@ -43,7 +43,7 @@
         </tr>
     <% } %>
 </table>
-    <a href="${pageContext.request.contextPath}/prets/form">Faire une demande de pret</a>
+    <a href="${pageContext.request.contextPath}/prets/formulaire">Faire une demande de pret</a>
     <a href="${pageContext.request.contextPath}/prets/liste">Voir les prets</a>
 </body>
 </html>

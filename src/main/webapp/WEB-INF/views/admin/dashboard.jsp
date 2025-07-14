@@ -10,5 +10,6 @@
     <a href="${pageContext.request.contextPath}/prets/liste">Voir les prets</a>
     <a href="${pageContext.request.contextPath}/prolongements/list">Voir les demandes de prolongement</a>
     <a href="${pageContext.request.contextPath}/adherent/list">Voir les membres</a>
+    <a href="${pageContext.request.contextPath}/prets/demandes">Voir les demandes de prêts</a>
 </body>
 </html>

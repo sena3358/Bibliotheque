@@ -10,7 +10,7 @@ import model.StatutPret;
 import model.TypePret;
 
 import java.time.LocalDate;
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import service.PretService;
 import service.AdherentService;
@@ -77,7 +78,48 @@ public class PretController {
         return "pret_list";
         }
     }
+//--demande
 
+    @GetMapping("/formulaire")
+    public String afficherFormulairePret(Model model, HttpSession session) {
+        Long adherentId = (Long) session.getAttribute("id_adherent");
+        List<Exemplaire> exemplairesDispo = exemplaireService.findByStatut(StatutExemplaire.disponible);
+        model.addAttribute("exemplaires", exemplairesDispo);
+        model.addAttribute("adherentId", adherentId);
+        return "pret_demande";
+    }
+
+    @GetMapping("/demandes")
+    public String afficherDemandes(Model model) {
+        List<Pret> demandes = pretService.listerDemandesEnAttente();
+        model.addAttribute("demandes", demandes);
+        return "admin/demandes_pret";
+    }
+ 
+    @PostMapping("/valider")
+    public String validerPret(@RequestParam("pret_id") Long pretId,
+                              @RequestParam("approuve") boolean approuve,
+                              HttpServletRequest request,
+                              Model model) {
+
+        String message = pretService.validerPret(pretId, approuve);
+        request.getSession().setAttribute("message", message);
+
+        return "redirect:/prets/demandes";
+    }
+
+    @PostMapping("/demander")
+    public String demanderPret(@RequestParam("adherentId") Long adherentId,
+                               @RequestParam("exemplaireId") Long exemplaireId,
+                               @RequestParam("type") TypePret typePret,
+                               HttpServletRequest request) {
+
+        String message = pretService.demanderPret(adherentId, exemplaireId, typePret);
+        request.getSession().setAttribute("message", message);
+        return "redirect:/prets/liste";
+    }
+
+//--rendre
     @PostMapping("/rendre")
     public String rendrePret(
     @RequestParam("id") Long id,

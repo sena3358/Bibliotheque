@@ -54,5 +54,12 @@ public class AdherentController {
             return "login";
         }
     }
-    
+
+    @GetMapping("/list")
+    public String listeAdherents(Model model) {
+        List<Adherent> adherents = adherentService.getAllAdherents();
+        model.addAttribute("adherents", adherents); 
+        return "/admin/adherent_list";
+    }
+ 
 }
