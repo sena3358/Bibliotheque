@@ -1,5 +1,6 @@
 package repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +24,7 @@ public interface LivreRepository extends JpaRepository<Livre, Long> {
     
     @Query("SELECT l FROM Livre l WHERE l.titre LIKE %:keyword% OR l.auteur LIKE %:keyword% OR l.isbn LIKE %:keyword%")
     List<Livre> searchBooks(@Param("keyword") String keyword);
+
+    @EntityGraph(attributePaths = "exemplaires")
+    Optional<Livre> findById(Long id);
 }

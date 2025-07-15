@@ -143,6 +143,7 @@
                     <th>Catégorie</th>
                     <th>Année</th>
                     <th>Langue</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -162,6 +163,7 @@
                         </td>
                         <td><%= livre.getAnneePublication() %></td>
                         <td><%= livre.getLangue() %></td>
+                        <td><a href="${pageContext.request.contextPath}/livres/api/livres?id=<%= livre.getId() %>">Voir details</a></td>
                     </tr>
                 <% } %>
             </tbody>

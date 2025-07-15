@@ -2,15 +2,22 @@ package controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import model.Exemplaire;
 import model.Livre;
 import service.CategorieService;
 import service.LivreService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -89,4 +96,35 @@ public class LivreController {
         }
         return "redirect:/livres";
     }
+
+    @GetMapping("/api/livres/{id}")
+    @ResponseBody
+    public Map<String, Object> getLivreAvecExemplaires(@PathVariable("id") Long id) {
+    Optional<Livre> livre = livreService.getLivreById(id); // méthode du service
+
+    if (livre.isEmpty()) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Livre introuvable");
+    }
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("id", livre.get().getId());
+    response.put("titre", livre.get().getTitre());
+    response.put("auteur", livre.get().getAuteur());
+    response.put("editeur", livre.get().getEditeur());
+    response.put("langue", livre.get().getLangue());
+
+    List<Map<String, Object>> exemplaires = new ArrayList<>();
+    for (Exemplaire ex : livre.get().getExemplaires()) {
+        Map<String, Object> exMap = new HashMap<>();
+        exMap.put("id", ex.getId());
+        exMap.put("code", ex.getCodeBarre());         
+        exMap.put("statut", ex.getStatut());      
+        exemplaires.add(exMap);
+    }
+
+    response.put("exemplaires", exemplaires);
+
+    return response;
+    }
+
 }
