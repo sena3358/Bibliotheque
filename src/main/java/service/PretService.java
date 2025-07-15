@@ -71,7 +71,7 @@ public class PretService {
 
     @SuppressWarnings("unlikely-arg-type")
     @Transactional
-    public String effectuerPret(Long adherentId, Long exemplaireId, TypePret typePret) {
+    public String effectuerPret(Long adherentId, Long exemplaireId, TypePret typePret, LocalDate datePret) {
     Optional<Adherent> optionalAdherent = adherentRepository.findById(adherentId);
     Optional<Exemplaire> optionalExemplaire = exemplaireRepository.findById(exemplaireId);
 
@@ -97,7 +97,7 @@ public class PretService {
 
     if (nombrePretsActifs >= profil.getNombreMaxPret()) return "Nombre de prêts maximum atteint";
 
-    LocalDate datePret = LocalDate.now();
+    
     LocalDate dateRetourPrevue = datePret.plusDays(profil.getDureePretJours());
 
     Pret pret = new Pret();
@@ -117,7 +117,7 @@ public class PretService {
 }
 
  @Transactional
-    public String demanderPret(Long adherentId, Long exemplaireId, TypePret typePret) {
+    public String demanderPret(Long adherentId, Long exemplaireId, TypePret typePret, LocalDate datePret) {
         Optional<Adherent> optionalAdherent = adherentRepository.findById(adherentId);
         Optional<Exemplaire> optionalExemplaire = exemplaireRepository.findById(exemplaireId);
 
@@ -157,8 +157,8 @@ public class PretService {
         Pret pret = new Pret();
         pret.setAdherent(adherent);
         pret.setExemplaire(exemplaire);
-        pret.setDatePret(LocalDate.now());
-        pret.setDateRetourPrevue(LocalDate.now().plusDays(profil.getDureePretJours()));
+        pret.setDatePret(datePret);
+        pret.setDateRetourPrevue(datePret.plusDays(profil.getDureePretJours()));
         pret.setTypePret(typePret);
         pret.setStatut(StatutPret.en_attente);
 

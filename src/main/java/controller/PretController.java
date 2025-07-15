@@ -55,12 +55,12 @@ public class PretController {
     public String effectuerPret(@RequestParam("adherent_id") Long adherentId,
                                 @RequestParam("exemplaire_id") Long exemplaireId,
                                 @RequestParam("type_pret") TypePret typePret,
+                                @RequestParam("date_pret") LocalDate datePret,
                                 Model model) {
-        String message = pretService.effectuerPret(adherentId, exemplaireId, typePret);
+        String message = pretService.effectuerPret(adherentId, exemplaireId, typePret, datePret);
         model.addAttribute("message", message);
         return "pret_result";
     }
-
 
     @GetMapping("/liste")
     public String listPrets(Model model, HttpSession session) {
@@ -112,9 +112,10 @@ public class PretController {
     public String demanderPret(@RequestParam("adherentId") Long adherentId,
                                @RequestParam("exemplaireId") Long exemplaireId,
                                @RequestParam("type") TypePret typePret,
+                               @RequestParam("date_pret") LocalDate datePret,
                                HttpServletRequest request) {
 
-        String message = pretService.demanderPret(adherentId, exemplaireId, typePret);
+        String message = pretService.demanderPret(adherentId, exemplaireId, typePret, datePret);
         request.getSession().setAttribute("message", message);
         return "redirect:/prets/liste";
     }

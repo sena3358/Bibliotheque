@@ -209,6 +209,7 @@
                                     <input type="hidden" name="adherentId" value="<%= adherentId %>"/>
                                     <input type="hidden" name="exemplaireId" value="<%= ex.getId() %>"/>
                                     <input type="hidden" name="type" value="maison"/>
+                                    <input type="date" name="date_pret" value="date_pret">
                                     <button type="submit" class="btn btn-primary">Demander</button>
                                 </form>
                             </td>

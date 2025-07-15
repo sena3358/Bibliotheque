@@ -143,6 +143,11 @@
                     <option value="lecture_sur_place">Lecture sur place</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="date_pret">Date de prêt :</label>
+                <input type="date" name="date_pret" id="date_pret" value="date_pret">
+            </div>
             
             <button type="submit" class="btn btn-submit">Enregistrer le prêt</button>
         </form>
