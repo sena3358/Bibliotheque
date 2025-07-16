@@ -82,9 +82,8 @@ public class PretService {
 
     if (!adherent.getStatut().equals(StatutAdherent.actif)) return "Adhérent inactif";
     if (!exemplaire.getStatut().equals(StatutExemplaire.disponible)) return "Exemplaire indisponible";
-    //if (adherent.getDateExpiration().isBefore(LocalDate.now())) return "Veuillez vous reabonnee";
+    if (adherent.getDateExpiration().isBefore(LocalDate.now())) return "Veuillez vous reabonnee";
 
-    // Vérification d'âge requis
     Livre livre = exemplaire.getLivre();
     if (livre.getAgeMinimal() != null && adherent.getDateDeNaissance() != null) {
         int age = Period.between(adherent.getDateDeNaissance(), LocalDate.now()).getYears();
@@ -122,6 +121,7 @@ public class PretService {
         Optional<Adherent> optionalAdherent = adherentRepository.findById(adherentId);
         Optional<Exemplaire> optionalExemplaire = exemplaireRepository.findById(exemplaireId);
 
+        
         if (optionalAdherent.isEmpty() || optionalExemplaire.isEmpty()) {
             return "Adhérent ou exemplaire introuvable.";
         }
@@ -137,12 +137,22 @@ public class PretService {
             return "Exemplaire non disponible";
         }
 
+        Livre livre = exemplaire.getLivre();
+        if (livre.getAgeMinimal() != null && adherent.getDateDeNaissance() != null) {
+            int age = Period.between(adherent.getDateDeNaissance(), LocalDate.now()).getYears();
+            if (age < livre.getAgeMinimal()) {
+                return "Âge insuffisant pour emprunter ce livre (âge requis : " + livre.getAgeMinimal() + ")";
+            }
+        }
+
         long pretsEnCours = pretRepository.countByAdherentIdAndStatut(adherentId, StatutPret.en_cours);
         ProfilPret profil = profilPretRepository.findByTypeMembre(adherent.getTypeMembre());
 
         if (pretsEnCours >= profil.getNombreMaxPret()) {
             return "Limite de prêts atteinte";
         }
+
+        if (adherent.getDateExpiration().isBefore(LocalDate.now())) return "Veuillez vous réabonner";
 
         Pret pret = new Pret();
         pret.setAdherent(adherent);
