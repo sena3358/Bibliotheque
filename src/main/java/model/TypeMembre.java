@@ -3,6 +3,8 @@ package model;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "typemembre")
 public class TypeMembre {
@@ -19,6 +21,7 @@ public class TypeMembre {
     
     private String description;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "typeMembre", cascade = CascadeType.ALL)
     private List<Adherent> adherents;
     
@@ -52,4 +55,5 @@ public class TypeMembre {
     
     public ProfilPret getProfilPret() { return profilPret; }
     public void setProfilPret(ProfilPret profilPret) { this.profilPret = profilPret; }
+
 }

@@ -3,20 +3,27 @@ package controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import model.Adherent;
 import model.Cotisation;
+import model.Penalite;
 import model.Pret;
 import model.StatutAdherent;
 import service.*;
@@ -42,6 +49,12 @@ public class AdherentController {
 
     @Autowired
     private CotisationService cotisationService;
+
+    @Autowired
+    private PretService pretService;
+
+    @Autowired
+    private PenaliteService penaliteService;
 
     @GetMapping("/login")
     public String loginForm(Model model) {
@@ -117,5 +130,40 @@ public class AdherentController {
         model.addAttribute("message", "Cotisation enregistrée avec succès !");
         return "redirect:/adherent/form";
     }
+
+    @GetMapping("/api/adherents")
+    @ResponseBody
+    public Map<String, Object> getAdherent(@RequestParam("id") Long id) {
+    Optional<Adherent> adherent = adherentService.getAdherentById(id);
+    //Penalite penalite = penaliteService.findByAdherent(id);
+    
+    if (adherent.isEmpty()) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Adhérent introuvable");
+    }
+
+    Long quotaPret = pretService.countPretsEnCoursPourAdherent(id);
+    LocalDate date = LocalDate.now();
+
+    Map<String, Object> data = new HashMap<>();
+    data.put("id", adherent.get().getId());
+    data.put("nom", adherent.get().getNom());
+    data.put("prenom", adherent.get().getPrenom());
+    data.put("typeMembre", adherent.get().getTypeMembre().getLibelle());
+    data.put("quotaPret", quotaPret);
+    if (adherent.get().getDateExpiration() != null && adherent.get().getDateExpiration().isBefore(date)) {
+        data.put("statut", "non abonnee");
+    }
+    else {
+        data.put("statut","abonnee");
+    }
+    //if (penalite.getDateEmission() != null && penalite.getDateFin() != null && penalite.getDateEmission().isAfter(date) && penalite.getDateFin().isBefore(date)) {
+    //    data.put("penalise", "oui");
+    //} else {
+    //    data.put("penalise", "non");
+    //}
+
+    return data;
+}
+
  
 }

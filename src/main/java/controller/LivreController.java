@@ -97,10 +97,10 @@ public class LivreController {
         return "redirect:/livres";
     }
 
-    @GetMapping("/api/livres/{id}")
+    @GetMapping("/api/livres")
     @ResponseBody
-    public Map<String, Object> getLivreAvecExemplaires(@PathVariable("id") Long id) {
-    Optional<Livre> livre = livreService.getLivreById(id); // méthode du service
+    public Map<String, Object> getLivreAvecExemplaires(@RequestParam("id") Long id) {
+    Optional<Livre> livre = livreService.getLivreById(id); 
 
     if (livre.isEmpty()) {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Livre introuvable");

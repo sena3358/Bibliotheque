@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Repository
 public interface AdherentRepository extends JpaRepository<Adherent, Long> {
+    
     List<Adherent> findByNumeroMembre(String numeroMembre);
     Optional<Adherent> findByEmail(String email);
     List<Adherent> findByTypeMembre(TypeMembre typeMembre);
@@ -25,5 +26,5 @@ public interface AdherentRepository extends JpaRepository<Adherent, Long> {
     
     @Query("SELECT a FROM Adherent a WHERE a.nom LIKE %:keyword% OR a.prenom LIKE %:keyword% OR a.numeroMembre LIKE %:keyword%")
     List<Adherent> searchAdherents(@Param("keyword") String keyword);
-
+    
 }

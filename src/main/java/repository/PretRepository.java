@@ -17,7 +17,7 @@ import java.util.List;
 public interface PretRepository extends JpaRepository<Pret, Long> {
     List<Pret> findByAdherent(Adherent adherent);
     List<Pret> findByStatut(StatutPret statut);
-    
+
     @Query("SELECT p FROM Pret p WHERE p.adherent = :adherent AND p.statut = 'en_cours'")
     List<Pret> findActiveLoans(@Param("adherent") Adherent adherent);
 
@@ -26,8 +26,14 @@ public interface PretRepository extends JpaRepository<Pret, Long> {
 
     @Query("SELECT COUNT(p) FROM Pret p WHERE p.adherent = :adherent AND p.statut = 'en_cours'")
     Long countActiveLoans(@Param("adherent") Adherent adherent);
-    long countByAdherentIdAndStatut(Long adherentId, StatutPret enCours);
 
-    List<Pret> findByAdherentId(Long adherentId);
+    Long countByAdherentIdAndStatut(Long adherentId, StatutPret enCours);
+
+    
+    @Query("SELECT p FROM Pret p WHERE p.adherent.id = :id")
+    List<Pret> findByAdherentId(@Param("id") Long id);
+
     List<Pret> findByExemplaireId(Long exemplaireId);
+
+
 }

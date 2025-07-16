@@ -16,6 +16,8 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "adherent")
 public class Adherent {
@@ -58,12 +60,15 @@ public class Adherent {
     @JoinColumn(name = "type_membre_id", nullable = false)
     private TypeMembre typeMembre;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "adherent", cascade = CascadeType.ALL)
     private List<Pret> prets;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "adherent", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "adherent", cascade = CascadeType.ALL)
     private List<Cotisation> cotisations;
     

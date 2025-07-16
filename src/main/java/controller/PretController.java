@@ -114,7 +114,8 @@ public class PretController {
                                @RequestParam("type") TypePret typePret,
                                @RequestParam("date_pret") LocalDate datePret,
                                HttpServletRequest request) {
-
+        
+        
         String message = pretService.demanderPret(adherentId, exemplaireId, typePret, datePret);
         request.getSession().setAttribute("message", message);
         return "redirect:/prets/liste";
@@ -141,11 +142,11 @@ public class PretController {
 
         Adherent adherent = pret.getAdherent();
         adherent.setStatut(StatutAdherent.suspendu);
-        adherent.setDateExpiration(dateRetourEffective.plusDays(10));
+        //adherent.setDateExpiration(dateRetourEffective.plusDays(10));
         adherentService.saveAdherent(adherent);
         Penalite penalite = new Penalite();
         penalite.setDateEmission(dateRetourEffective);
-        penalite.setDateFin(dateRetourEffective.plusDays(10));
+        penalite.setDateFin(dateRetourEffective.plusDays(10)); 
         penalite.setPret(pret);
         penalite.setAdherent(adherent);
         penaliteService.save(penalite);
