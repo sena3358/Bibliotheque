@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "JourFerie")
+@Table(name = "jourferie")
 public class JourFerie {
 
     @Id
@@ -21,12 +21,12 @@ public class JourFerie {
     private Long id;
 
     @Column(name = "date_ferie", nullable = false)
-    private LocalDate date;
+    private LocalDate dateFerie;
 
 
     public JourFerie() {}
-    public JourFerie(LocalDate date) {
-        this.date = date;
+    public JourFerie(LocalDate dateFerie) {
+        this.dateFerie = dateFerie; 
     }
     public Long getId() {
         return id;
@@ -34,12 +34,12 @@ public class JourFerie {
     public void setId(Long id) {
         this.id = id;
     }
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getDateFerie() {
+        return dateFerie;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDateFerie(LocalDate dateFerie) {
+        this.dateFerie = dateFerie;
     }
 
 }

@@ -18,8 +18,9 @@ import repository.ExemplaireRepository;
 import repository.PretRepository;
 import repository.AdherentRepository;
 import repository.ProfilPretRepository;
+import repository.JourFerieRepository;
 
-
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Date;
@@ -47,6 +48,12 @@ public class PretService {
 
     @Autowired
     private ProfilPretRepository profilPretRepository;
+
+    @Autowired
+    private JourFerieRepository jourFerieRepository;
+
+    @Autowired
+    private JourFerieService jourFerieService;
     
     public List<Pret> getAllPrets() {
         return pretRepository.findAll();
@@ -95,11 +102,18 @@ public class PretService {
     long nombrePretsActifs = pretRepository.countByAdherentIdAndStatut(adherentId, StatutPret.en_cours);
     ProfilPret profil = profilPretRepository.findByTypeMembre(adherent.getTypeMembre());
 
-    if (nombrePretsActifs >= profil.getNombreMaxPret()) return "Nombre de prêts maximum atteint";
+    if (nombrePretsActifs >= profil.getNombreMaxPret()) return "Nombre de prêts maximum atteint"; 
 
-    
-    LocalDate dateRetourPrevue = datePret.plusDays(profil.getDureePretJours());
+    if(datePret.getDayOfWeek() == DayOfWeek.SUNDAY ) return "La bibliotheque est fermee";
 
+    if(jourFerieRepository.existsByDateFerie(datePret)) {
+        return "La bibliotheque est fermee";
+    }
+
+    //LocalDate dateRetourPrevue = datePret.plusDays(profil.getDureePretJours()); 
+    LocalDate dateRetourPrevue = jourFerieService.prochainJourOuvrable(datePret.plusDays(profil.getDureePretJours()));
+
+ 
     Pret pret = new Pret();
     pret.setAdherent(adherent);
     pret.setExemplaire(exemplaire);
@@ -158,7 +172,9 @@ public class PretService {
         pret.setAdherent(adherent);
         pret.setExemplaire(exemplaire);
         pret.setDatePret(datePret);
-        pret.setDateRetourPrevue(datePret.plusDays(profil.getDureePretJours()));
+        //pret.setDateRetourPrevue(datePret.plusDays(profil.getDureePretJours()));
+        LocalDate retour = datePret.plusDays(profil.getDureePretJours());
+        pret.setDateRetourPrevue(jourFerieService.prochainJourOuvrable(retour));
         pret.setTypePret(typePret);
         pret.setStatut(StatutPret.en_attente);
 
@@ -188,7 +204,11 @@ public class PretService {
             ProfilPret profil = profilPretRepository.findByTypeMembre(pret.getAdherent().getTypeMembre());
 
             pret.setDatePret(LocalDate.now());
-            pret.setDateRetourPrevue(LocalDate.now().plusDays(profil.getDureePretJours()));
+            //pret.setDateRetourPrevue(LocalDate.now().plusDays(profil.getDureePretJours()));
+            //LocalDate now = LocalDate.now();
+            //pret.setDatePret(now);
+            pret.setDateRetourPrevue(jourFerieService.prochainJourOuvrable(LocalDate.now().plusDays(profil.getDureePretJours())));
+
             pret.setStatut(StatutPret.en_cours);
 
             pret.getExemplaire().setStatut(StatutExemplaire.en_pret);

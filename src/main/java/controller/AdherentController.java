@@ -96,6 +96,13 @@ public class AdherentController {
     return "redirect:/adherent/list";
     }
 
+    @GetMapping("/logout")
+public String logout(HttpSession session) {
+    session.invalidate();  
+    return "redirect:/"; 
+}
+
+
 //--Cotix    
     @GetMapping("/form")
     public String showForm(Model model, HttpSession session) {

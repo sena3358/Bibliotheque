@@ -169,6 +169,7 @@
         <a href="${pageContext.request.contextPath}/prets/formulaire">Faire une demande de prêt</a>
         <a href="${pageContext.request.contextPath}/prets/liste">Voir mes prêts</a>
         <a href="${pageContext.request.contextPath}/adherent/form">Payer l'abonnement</a>
+        <a href="${pageContext.request.contextPath}/adherent/logout">Deconnexion</a>
     </div>
 
     <div class="table-container">

@@ -28,7 +28,11 @@ public class ProfilPret {
     
     @Column(name = "delai_de_pret_sur_place")
     private Integer delaiDePretSurPlace;
+
+    @Column(name = "nombre_jour_penalite")
+    private Integer nombreJourPenalite;
     
+
     @OneToOne
     @JoinColumn(name = "type_membre_id", nullable = false, unique = true)
     private TypeMembre typeMembre;
@@ -36,12 +40,13 @@ public class ProfilPret {
     // Constructeurs
     public ProfilPret() {}
     
-    public ProfilPret(TypeMembre typeMembre, Integer dureePretJours, Integer nombreMaxPret, Integer nombreMaxProlongement, Integer delaiProlongementJours) {
+    public ProfilPret(TypeMembre typeMembre, Integer dureePretJours, Integer nombreMaxPret, Integer nombreMaxProlongement, Integer delaiProlongementJours, Integer nombreJourPenalite) {
         this.typeMembre = typeMembre;
         this.dureePretJours = dureePretJours;
         this.nombreMaxPret = nombreMaxPret;
         this.nombreMaxProlongement = nombreMaxProlongement;
         this.delaiProlongementJours = delaiProlongementJours;
+        this.nombreJourPenalite = nombreJourPenalite;
     }
     
     // Getters et Setters
@@ -68,6 +73,13 @@ public class ProfilPret {
     
     public TypeMembre getTypeMembre() { return typeMembre; }
     public void setTypeMembre(TypeMembre typeMembre) { this.typeMembre = typeMembre; }
+    public Integer getNombreJourPenalite() {
+        return nombreJourPenalite;
+    }
+
+    public void setNombreJourPenalite(Integer nombreJourPenalite) {
+        this.nombreJourPenalite = nombreJourPenalite;
+    }
 
     public ProfilPret orElseThrow(Object object) {
         // TODO Auto-generated method stub
