@@ -87,13 +87,11 @@ CREATE TABLE Pret (
 -- Table Reservation
 CREATE TABLE Reservation (
     reservation_id SERIAL PRIMARY KEY,
-    livre_id INT NOT NULL,  -- Change de exemplaire_id à livre_id
+    exemplaire_id INT NOT NULL,  -- Change de exemplaire_id à livre_id
     adherent_id INT NOT NULL,
     date_reservation TIMESTAMP NOT NULL,
-    date_expiration TIMESTAMP,
     statut VARCHAR(10) CHECK (statut IN ('en_attente', 'completee', 'annulee')) DEFAULT 'en_attente',
-    priorite INT,
-    FOREIGN KEY (livre_id) REFERENCES Livre(livre_id) ON DELETE CASCADE,
+    FOREIGN KEY (exemplaire_id) REFERENCES Exemplaire(exemplaire_id) ON DELETE CASCADE,
     FOREIGN KEY (adherent_id) REFERENCES Adherent(adherent_id) ON DELETE CASCADE
 );
 

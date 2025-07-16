@@ -14,5 +14,6 @@
     </select><br>
     <input type="submit" value="Valider">
 </form> 
+<a href="${pageContext.request.contextPath}/admin/dashboard.jsp">Retour</a>
 </body>
 </html>

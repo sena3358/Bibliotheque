@@ -2,6 +2,7 @@ package controller;
 
 import model.Adherent;
 import model.Exemplaire;
+import model.Penalite;
 import model.Pret;
 import model.StatutAdherent;
 import model.StatutExemplaire;
@@ -23,6 +24,7 @@ import service.PretService;
 import service.AdherentService;
 import service.ExemplaireService;
 import service.LivreService;
+import service.PenaliteService;
 
 @Controller
 @RequestMapping("/prets")
@@ -39,6 +41,9 @@ public class PretController {
 
     @Autowired
     private LivreService livreService;
+
+    @Autowired
+    private PenaliteService penaliteService;
 
     @GetMapping("/form")
     public String showForm() {
@@ -95,6 +100,12 @@ public class PretController {
         adherent.setStatut(StatutAdherent.suspendu);
         adherent.setDateExpiration(dateRetourEffective.plusDays(10));
         adherentService.saveAdherent(adherent);
+        Penalite penalite = new Penalite();
+        penalite.setDateEmission(dateRetourEffective);
+        penalite.setDateFin(dateRetourEffective.plusDays(10));
+        penalite.setPret(pret);
+        penalite.setAdherent(adherent);
+        penaliteService.save(penalite);
     } else {
         pret.setStatut(StatutPret.retourne);
     }
