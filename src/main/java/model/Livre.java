@@ -3,6 +3,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "livre")
 public class Livre {
@@ -45,9 +47,11 @@ public class Livre {
     @JoinColumn(name = "categorie_id")
     private Categorie categorie;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "livre", cascade = CascadeType.ALL)
     private List<Exemplaire> exemplaires;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "livre", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
     

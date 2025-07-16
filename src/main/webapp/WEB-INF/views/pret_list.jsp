@@ -265,7 +265,7 @@
                                     <td><%= pret.getDateRetourPrevue().format(dateFormatter) %></td>
                                     <% if (pret.getDateRetourEffective() != null) { %>
                                         <td><%= pret.getDateRetourEffective().format(dateFormatter) %></td>
-                                        <td>Retour enregistré</td>
+                                        <td>Retour enregistrer</td>
                                     <% } else { %>
                                         <td>
                                             <form class="table-form" action="${pageContext.request.contextPath}/prets/rendre" method="post">
@@ -290,7 +290,6 @@
                                 <th>Statut</th>
                                 <th>Date du prêt</th>
                                 <th>Date de fin</th>
-                                <th>Date de retour</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -300,7 +299,7 @@
                                     <td><%= pret.getId() %></td>
                                     <td><%= pret.getExemplaire().getLivre().getTitre() %></td>
                                     <td><%= pret.getExemplaire().getLivre().getAuteur() %></td>
-                                    <td>
+                                    <td>     
                                         <span class="badge 
                                             <% if (pret.getDateRetourEffective() != null) { %>
                                                 badge-returned
@@ -315,16 +314,8 @@
                                     <td><%= pret.getDatePret().format(dateFormatter) %></td>
                                     <td><%= pret.getDateRetourPrevue().format(dateFormatter) %></td>
                                     <% if (pret.getDateRetourEffective() != null) { %>
-                                        <td><%= pret.getDateRetourEffective().format(dateFormatter) %></td>
-                                        <td></td>
+                                        <td><%= pret.getDateRetourEffective() %></td>                                       
                                     <% } else { %>
-                                        <td>
-                                            <form class="table-form" action="${pageContext.request.contextPath}/prets/rendre" method="post">
-                                                <input type="hidden" name="id" value="<%= pret.getId() %>">
-                                                <input type="date" name="date_retour_prevue" required>
-                                                <button type="submit" class="btn btn-success">Rendre</button>
-                                            </form>
-                                        </td>
                                         <td>
                                             <form action="${pageContext.request.contextPath}/prolongements/demander" method="post">
                                                 <input type="hidden" name="id" value="<%= pret.getId() %>">

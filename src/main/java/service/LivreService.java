@@ -23,6 +23,7 @@ public class LivreService {
         return livreRepository.findAll();
     }
     
+    @Transactional
     public Optional<Livre> getLivreById(Long id) {
         return livreRepository.findById(id);
     }
