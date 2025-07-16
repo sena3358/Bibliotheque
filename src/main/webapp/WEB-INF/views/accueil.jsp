@@ -45,5 +45,6 @@
 </table>
     <a href="${pageContext.request.contextPath}/prets/formulaire">Faire une demande de pret</a>
     <a href="${pageContext.request.contextPath}/prets/liste">Voir les prets</a>
+    <a href="${pageContext.request.contextPath}/adherent/form">Payer l'abonnement</a>
 </body>
 </html>

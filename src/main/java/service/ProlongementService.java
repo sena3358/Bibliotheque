@@ -18,7 +18,6 @@ import model.StatutProlongement;
 import repository.PretRepository;
 import repository.ProfilPretRepository;
 import repository.ProlongementRepository;
-import repository.ReservationRepository;
 
 @Service
 @Transactional
@@ -32,9 +31,6 @@ public class ProlongementService {
 
     @Autowired
     ProfilPretRepository profilPretRepository;
-
-    @Autowired
-    ReservationRepository reservationRepository;
 
     @Transactional
     public List<Prolongement> findByStatut(){
