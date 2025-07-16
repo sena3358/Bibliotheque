@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="spring-web">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="spring-web-1.0-SNAPSHOT.war" />
+  </artifact>
+</component>
