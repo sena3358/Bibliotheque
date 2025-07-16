@@ -4,10 +4,12 @@ import model.Adherent;
 import model.Exemplaire;
 import model.Penalite;
 import model.Pret;
+import model.ProfilPret;
 import model.StatutAdherent;
 import model.StatutExemplaire;
 import model.StatutPret;
 import model.TypePret;
+import repository.ProfilPretRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -45,6 +47,9 @@ public class PretController {
 
     @Autowired
     private PenaliteService penaliteService;
+
+    @Autowired
+    private ProfilPretRepository profilPretRepository;
 
     @GetMapping("/form")
     public String showForm() {
@@ -141,12 +146,13 @@ public class PretController {
         pret.setStatut(StatutPret.en_retard);
 
         Adherent adherent = pret.getAdherent();
+        ProfilPret profil = profilPretRepository.findByTypeMembre(adherent.getTypeMembre());
         adherent.setStatut(StatutAdherent.suspendu);
         //adherent.setDateExpiration(dateRetourEffective.plusDays(10));
         adherentService.saveAdherent(adherent);
         Penalite penalite = new Penalite();
         penalite.setDateEmission(dateRetourEffective);
-        penalite.setDateFin(dateRetourEffective.plusDays(10)); 
+        penalite.setDateFin(dateRetourEffective.plusDays(profil.getNombreJourPenalite()));
         penalite.setPret(pret);
         penalite.setAdherent(adherent);
         penaliteService.save(penalite);
