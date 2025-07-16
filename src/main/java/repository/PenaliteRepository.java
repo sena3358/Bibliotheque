@@ -7,5 +7,7 @@ import model.Penalite;
 
 @Repository
 public interface PenaliteRepository extends JpaRepository<Penalite, Long>{
-    
+
+
+    //public Penalite findByAdherent(Long AdherentId);
 }

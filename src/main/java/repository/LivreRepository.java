@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface LivreRepository extends JpaRepository<Livre, Long> {
+    
     Optional<Livre> findByIsbn(String isbn);
     List<Livre> findByCategorie(Categorie categorie);
     List<Livre> findByAuteurContainingIgnoreCase(String auteur);
@@ -26,5 +27,5 @@ public interface LivreRepository extends JpaRepository<Livre, Long> {
     List<Livre> searchBooks(@Param("keyword") String keyword);
 
     @EntityGraph(attributePaths = "exemplaires")
-    Optional<Livre> findById(Long id);
+    Optional<Livre> findById(Long id);  
 }

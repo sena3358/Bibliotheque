@@ -15,4 +15,9 @@ public class PenaliteService {
     public Penalite save(Penalite penalite){
         return penaliteRepository.save(penalite);
     }
+
+    //public Penalite findByAdherent(Long AdherentId){
+    //    return penaliteRepository.findByAdherent(AdherentId);
+    //}
+
 }

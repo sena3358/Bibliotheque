@@ -211,6 +211,7 @@
                                     <span class="status-message">Déjà actif</span>
                                 <% } %>
                             </td>
+                            <td><a href="${pageContext.request.contextPath}/adherent/api/adherents?id=<%= adherent.getId() %>">Voir details</a></td>
                         </tr>
                     <% } %>
                 </tbody>

@@ -216,6 +216,9 @@ public class PretService {
         return pretRepository.findByAdherentId(adherentId);
     }
 
+    public Long countPretsEnCoursPourAdherent(Long adherentId) {
+    return pretRepository.countByAdherentIdAndStatut(adherentId, StatutPret.en_cours);
+    }
 
     public List<Pret> getPretsParExemplaire(Long exemplaireId) {
         return pretRepository.findByExemplaireId(exemplaireId);
@@ -228,6 +231,7 @@ public class PretService {
     public Pret findById(Long id) {
         return pretRepository.findById(id).orElse(null);
     }
+
     public Pret save(Pret pret) {
         return pretRepository.save(pret);
     }

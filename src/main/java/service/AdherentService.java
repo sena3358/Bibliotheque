@@ -25,9 +25,10 @@ public class AdherentService {
         return adherentRepository.findAll();
     }
     
+    @Transactional
     public Optional<Adherent> getAdherentById(Long id) {
         return adherentRepository.findById(id);
-    }
+    } 
     
     public List<Adherent> getAdherentByNumeroMembre(String numeroMembre) {
         return adherentRepository.findByNumeroMembre(numeroMembre);
