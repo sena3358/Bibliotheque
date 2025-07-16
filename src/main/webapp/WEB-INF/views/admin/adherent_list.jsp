@@ -26,6 +26,6 @@
             </tr>
         <% } %>
     </table>
-    <a href="${pageContext.request.contextPath}/admin/dashboard.jsp">Retour</a>
+    <a href="${pageContext.request.contextPath}/admin/dashboard">Retour</a>
 </body>
 </html>

@@ -66,5 +66,3 @@ public class Cotisation {
     public Adherent getAdherent() { return adherent; }
     public void setAdherent(Adherent adherent) { this.adherent = adherent; }
 }
-
-// Penalite.java

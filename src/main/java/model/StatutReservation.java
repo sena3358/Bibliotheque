@@ -1,9 +1,9 @@
 package model;
 
 public enum StatutReservation {
-    EN_ATTENTE("en_attente"),
-    COMPLETEE("completee"),
-    ANNULEE("annulee");
+    en_attente("en_attente"),
+    completee("completee"),
+    annulee("annulee");
     
     private final String value;
     

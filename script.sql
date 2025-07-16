@@ -79,7 +79,7 @@ CREATE TABLE Pret (
     date_retour_prevue DATE NOT NULL,
     date_retour_effective DATE,
     type_pret VARCHAR(20) CHECK (type_pret IN ('maison', 'lecture_sur_place')) NOT NULL,
-    statut VARCHAR(10) CHECK (statut IN ('en_cours', 'retourne', 'en_retard')) DEFAULT 'en_cours',
+    statut VARCHAR(10) CHECK (statut IN ('en_cours', 'retourne', 'en_retard', 'en_attente', 'rejete')),
     FOREIGN KEY (exemplaire_id) REFERENCES Exemplaire(exemplaire_id) ON DELETE CASCADE,
     FOREIGN KEY (adherent_id) REFERENCES Adherent(adherent_id) ON DELETE CASCADE
 );
@@ -163,3 +163,8 @@ CREATE TABLE ProfilPret (
 
 INSERT INTO Admin (email, mot_de_passe) VALUES
 ('admin@example.com', 'password123');
+
+ALTER TABLE pret
+ADD CONSTRAINT pret_statut_check CHECK (
+    statut IN ('en_attente', 'en_cours', 'retourne', 'perdu', 'rejete')
+);

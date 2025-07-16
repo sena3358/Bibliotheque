@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import model.Exemplaire;
+import model.StatutExemplaire;
 import repository.ExemplaireRepository;
 
 @Service
@@ -23,5 +24,9 @@ public class ExemplaireService {
 
     public void saveExemplaire(Exemplaire exemplaire) {
         exemplaireRepository.save(exemplaire);
+    }
+
+    public List<Exemplaire> findByStatut(StatutExemplaire disponible) {
+        return exemplaireRepository.findByStatut(disponible);
     }
 }
