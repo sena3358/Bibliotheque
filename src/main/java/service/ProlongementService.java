@@ -51,6 +51,8 @@ public class ProlongementService {
     if (!pret.getStatut().equals(StatutPret.en_cours)) return "Le prêt n'est pas actif";
     if (pret.getDateRetourPrevue().isBefore(LocalDate.now())) return "Le prêt est déjà en retard";
 
+    
+
     // Vérification de la réservation
     //boolean livreReserve = reservationRepository.existsByLivreIdAndStatutAndDateExpirationAfter(
     //    pret.getExemplaire().getLivre().getId(), "en_attente", LocalDate.now());
@@ -63,6 +65,13 @@ public class ProlongementService {
     ProfilPret profil = profilPretRepository.findByTypeMembre(pret.getAdherent().getTypeMembre());
     if (prolongementsEffectues >= profil.getNombreMaxProlongement()) return "Limite de prolongements atteinte";
 
+    LocalDate date_retour_prolong = pret.getDateRetourPrevue().plusDays(profil.getDureePretJours());
+
+    if (Date_retour) {
+        
+    }
+
+    
     // Vérifier délai minimal avant fin de prêt
     //if (ChronoUnit.DAYS.between(LocalDate.now(), pret.getDateRetourPrevue()) > profil.getDelaiProlongementJours()) {
     //    return "Trop tôt pour demander une prolongation";
@@ -72,7 +81,7 @@ public class ProlongementService {
     Prolongement prolongement = new Prolongement();
     prolongement.setPret(pret);
     prolongement.setDateDemande(LocalDateTime.now());
-    prolongement.setNouvelleDateRetour(pret.getDateRetourPrevue().plusDays(profil.getDureePretJours()));
+    prolongement.setNouvelleDateRetour(date_retour_prolong);
     prolongement.setStatut(StatutProlongement.demande);
     System.out.println(">>> Sauvegarde du prolongement en base...");
     prolongementRepository.save(prolongement);
