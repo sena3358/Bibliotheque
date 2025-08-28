@@ -67,10 +67,6 @@ public class ProlongementService {
 
     LocalDate date_retour_prolong = pret.getDateRetourPrevue().plusDays(profil.getDureePretJours());
 
-    if (Date_retour) {
-        
-    }
-
     
     // Vérifier délai minimal avant fin de prêt
     //if (ChronoUnit.DAYS.between(LocalDate.now(), pret.getDateRetourPrevue()) > profil.getDelaiProlongementJours()) {
